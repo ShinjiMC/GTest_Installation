@@ -168,16 +168,16 @@ Con estos pasos, habrás instalado Google Test en tu entorno de desarrollo C++ e
 
 ## Ejecutar Casos de Prueba con Google Test
 
-Para ejecutar los casos de prueba incluidos en el archivo `main.cpp`, sigue estos pasos:
+Para ejecutar los casos de prueba incluidos en el archivo `factorial.cpp`, sigue estos pasos:
 
 1. **Compilar el archivo de prueba:**
 
-   - Abre una terminal en la ubicación del archivo `main.cpp`.
+   - Abre una terminal en la ubicación del archivo `factorial.cpp`.
 
-   - Ejecuta el siguiente comando para compilar el archivo y generar un ejecutable llamado `main.exe`, enlazando con la biblioteca Google Test (`-lgtest`):
+   - Ejecuta el siguiente comando para compilar el archivo y generar un ejecutable llamado `factorial.exe`, enlazando con la biblioteca Google Test (`-lgtest`):
 
      ```bash
-     g++ main.cpp -o main -lgtest
+     g++ factorial.cpp -o factorial -lgtest
      ```
 
 2. **Ejecutar el programa de prueba:**
@@ -185,15 +185,15 @@ Para ejecutar los casos de prueba incluidos en el archivo `main.cpp`, sigue esto
    - Una vez que se ha generado el ejecutable, puedes ejecutarlo utilizando el siguiente comando:
 
      ```bash
-     ./main.exe
+     ./factorial.exe
      ```
 
 3. **Resultado esperado:**
 
    - Tras ejecutar el programa, deberías obtener un resultado similar al siguiente:
 
-     ![Resultado de la ejecución de los casos de prueba](execution.png)
+     ![Resultado de la ejecución de los casos de prueba](execution_1.png)
 
    - Esto mostrará los resultados de los casos de prueba, indicando si pasaron correctamente o si se encontraron errores.
 
-Con estos pasos, habrás ejecutado con éxito los casos de prueba utilizando Google Test en C++. El archivo `main.cpp` contiene casos de prueba para calcular el factorial. Puedes utilizar este flujo para probar tus propios programas y comprobar su comportamiento bajo diferentes condiciones.
+Con estos pasos, habrás ejecutado con éxito los casos de prueba utilizando Google Test en C++. El archivo `factorial.cpp` contiene casos de prueba para calcular el factorial. Puedes utilizar este flujo para probar tus propios programas y comprobar su comportamiento bajo diferentes condiciones.
