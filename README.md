@@ -201,7 +201,7 @@ Con estos pasos, habrás ejecutado con éxito los casos de prueba utilizando Goo
 
 ## Análisis del uso de Test Fixtures en una clase Triangle con GTest
 
-Un Test Fixture en GTest es una clase que proporciona un contexto común para un conjunto de pruebas. Permite la inicialización y limpieza compartida entre las pruebas. En el código proporcionado, `TriangleTest` es un Test Fixture que hereda de `::testing::Test`.
+Un Test Fixture en GTest es una clase que proporciona un contexto común para un conjunto de pruebas. Permite la inicialización y limpieza compartida entre las pruebas. En el código usado llamado `triangle.cpp`, `TriangleTest` es un Test Fixture que hereda de `::testing::Test`.
 
 ```cpp
 namespace
