@@ -197,3 +197,87 @@ Para ejecutar los casos de prueba incluidos en el archivo `factorial.cpp`, sigue
    - Esto mostrará los resultados de los casos de prueba, indicando si pasaron correctamente o si se encontraron errores.
 
 Con estos pasos, habrás ejecutado con éxito los casos de prueba utilizando Google Test en C++. El archivo `factorial.cpp` contiene casos de prueba para calcular el factorial. Puedes utilizar este flujo para probar tus propios programas y comprobar su comportamiento bajo diferentes condiciones.
+
+## Análisis del uso de Test Fixtures en una clase Triangle con GTest
+
+Un Test Fixture en GTest es una clase que proporciona un contexto común para un conjunto de pruebas. Permite la inicialización y limpieza compartida entre las pruebas. En el código proporcionado, `TriangleTest` es un Test Fixture que hereda de `::testing::Test`.
+
+```cpp
+namespace
+{
+    class TriangleTest : public ::testing::Test
+    {
+        // ...
+    protected:
+        Triangle<int> *triangle;
+
+        void SetUp() override
+        {
+            triangle = nullptr;
+            // Función de inicialización común que se ejecuta antes de cada prueba.
+        }
+
+        void TearDown() override
+        {
+            if (triangle)
+            {
+                delete triangle;
+                triangle = nullptr;
+            }// Función de limpieza común que se ejecuta después de cada prueba.
+        }
+    };
+}
+```
+
+- **SetUp**: La función `SetUp` se ejecuta antes de cada prueba y se utiliza para inicializar cualquier objeto o estado común necesario para las pruebas. En el código, se inicializa un puntero `triangle` que se utilizará para crear instancias de la clase `Triangle`.
+
+- **TearDown**: La función `TearDown` se ejecuta después de cada prueba y se utiliza para realizar cualquier limpieza necesaria, como liberar la memoria o cerrar recursos. En el código, se asegura de liberar la memoria del puntero `triangle`.
+
+### Macros ASSERT y EXPECT
+
+En GTest, las macros ASSERT y EXPECT se utilizan para verificar condiciones en las pruebas:
+
+- **ASSERT**: Si una condición evaluada con ASSERT no se cumple, la prueba falla de inmediato, y el flujo de control no continúa ejecutando el resto de la prueba. Esto es útil para condiciones críticas en las que no se debe continuar si la verificación falla.
+
+- **EXPECT**: Si una condición evaluada con EXPECT no se cumple, se registra un fallo, pero la prueba continúa ejecutándose. Esto es útil para comprobaciones no críticas en las que se desea verificar varias condiciones antes de finalizar la prueba.
+
+En el código proporcionado, se utilizan principalmente las macros ASSERT para verificar condiciones críticas y EXPECT para registrar comprobaciones no críticas. Por ejemplo:
+
+```cpp
+void runTestCase(int a, int b, int c, const std::string &expected)
+{
+    triangle = new Triangle<int>(a, b, c);
+    ASSERT_NE(nullptr, triangle);
+    EXPECT_EQ(expected, triangle->classify());
+}
+```
+
+- **`ASSERT_NE(nullptr, triangle)`**: Verifica que el objeto `triangle` se haya creado correctamente y no sea nulo. Si `triangle` es nulo, la prueba falla de inmediato.
+
+- **`EXPECT_EQ(expected, triangle->classify())`**: Comprueba si la clasificación del triángulo (`triangle->classify()`) coincide con el resultado esperado (`expected`). Registra un fallo si no coincide pero permite que la prueba continúe.
+
+```cpp
+TEST_F(TriangleTest, EquilateralTriangle)
+{
+   ASSERT_NO_FATAL_FAILURE(runTestCase(3, 3, 3, "Equilátero"));
+   ASSERT_NO_FATAL_FAILURE(runTestCase(5, 5, 5, "Equilátero"));
+   ASSERT_NO_FATAL_FAILURE(runTestCase(8, 8, 8, "Equilátero"));
+}
+TEST_F(...)
+```
+
+- **`ASSERT_NO_FATAL_FAILURE(runTestCase(3, 3, 3, "Equilátero"));`**: La macro `ASSERT_NO_FATAL_FAILURE` se utiliza para indicar que no se espera que ocurran errores graves durante la ejecución de `runTestCase`.
+
+- **`TEST_F(fixture_class_name, test_name)`**: Esta macro se utiliza para definir un caso de prueba en GTest. A continuación, se detallan los elementos clave de esta macro:
+
+  - `fixture_class_name`: Es el nombre de la clase de prueba o test fixture a la que pertenece el caso de prueba. La clase de prueba se define previamente e incluye funciones de configuración y limpieza comunes para los casos de prueba relacionados.
+
+  - `test_name`: Es el nombre del caso de prueba en particular que se está definiendo. En este caso, `test_name` es una función miembro de la clase de prueba.
+
+  Cuando se ejecuta el programa de pruebas, GTest descubre y ejecuta automáticamente todas las funciones `TEST_F` definidas en las clases de prueba, proporcionando así una forma organizada y reutilizable de realizar pruebas. La función `SetUp` en la clase de prueba se ejecuta antes de cada caso de prueba, y la función `TearDown` se ejecuta después de cada caso de prueba.
+
+### Conclusión
+
+El uso de Test Fixtures, macros `ASSERT` y `EXPECT`, y las funciones `TEST_F`, `SetUp` y `TearDown` en GTest facilita la organización y ejecución de pruebas unitarias. Estos elementos proporcionan un contexto común para las pruebas, permiten verificar condiciones de manera efectiva y garantizan una inicialización y limpieza adecuada. Esta metodología contribuye significativamente a la creación de pruebas unitarias sólidas y de fácil mantenimiento, como se demuestra en la ejecución exitosa de `triangle.cpp`, ilustrada en la siguiente imagen:
+
+![Resultado de la ejecución de los casos de prueba en Triangle](execution_2.png)
