@@ -21,6 +21,7 @@ A continuación, te guiaré a través de los pasos necesarios para instalar Goog
 - [Instalación de CMake en Windows](#instalación-de-cmake-en-windows)
 - [Instalación de Google Test en Windows](#instalación-de-google-test-en-windows)
 - [Ejecutar Casos de Prueba con Google Test en C++](#ejecutar-casos-de-prueba-con-google-test)
+- [Análisis del uso de Test Fixtures en una clase Triangle con GTest](#análisis-del-uso-de-test-fixtures-en-una-clase-triangle-con-gtest)
 
 ## Instalación MSYS2 con GCC, G++, GDB y Make en Windows
 
